@@ -38,7 +38,7 @@ var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<
                    }).error(function (){
                                  })
            .on('done', function(layer) {
-  layer.getSubLayer(0).set(url2);
+  layer.getSubLayer(2).set(url2);
 }).on('error', function() {
 });
 }
