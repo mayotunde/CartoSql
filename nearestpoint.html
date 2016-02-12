@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PostGreSql CartoDb</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset= "UTF-8"/>
+       <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+  </head>
+  <body>
+    <div id="map" style='width: 800px; height: 500px'></div>
+    
+        <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+
+    <script>
+var map;
+function main () {
+      var  map = new L.map('map', {
+          zoomControl: true,
+          center: [6.44, 3.55],
+          zoom: 13
+        });
+var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<a href="http://openstreetmap.org">openstreetmap</a>';
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attr
+        }).addTo(map);
+
+var vizjson_url = 'https://mayotunde.cartodb.com/api/v2/viz/6c558540-a073-11e5-bdb5-0ef24382571b/viz.json';
+var subLayerOptions = {
+  sql:("SELECT * FROM yenitanks ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint(3.3830833,6.45325), 4326) LIMIT 4")
+ }
+
+ 
+ 
+cartodb.createLayer(map, vizjson_url)
+.addTo(map)
+.on('done', function(layer) {
+}).on('error', function() {
+})
+.on('done', function(layer) {
+  layer.getSubLayer(0).set(subLayerOptions);
+}).on('error', function() {
+});
+}
+window.onload = main;
+
+     </script>
+  </body>
+</html>
+
