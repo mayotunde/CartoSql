@@ -1,48 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Gmaps example | CartoDB.js</title>
+    <title>Leaflet example | CartoDB.js</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    
-        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
-       
+    <meta charset=UTF-8"/>
+       <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
   </head>
   <body>
-    <div id="map" style='width:600px;height:400px'></div>
-  
+    <div id="map" style='width: 600px; height: 400px'></div>
     
-       <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+        <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
 
     <script>
-
+var map;
 function main () {
       var  map = new L.map('map', {
           zoomControl: true,
-          center: [7.50, 3.75],
+          center: [7.50, 4.00],
           zoom: 10
         });
 var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<a href="http://mapbox.com">tiles by mapbox</a>';
-   L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_map/MapServer/tile/{z}/{y}/{x}.png', {
-          attribution: attr
-        }).addTo(map);
-      
-		 var url1 = 'https://mayotunde.cartodb.com/api/v2/viz/57066938-0a33-11e5-a3a9-0e49835281d6/viz.json';
-	var url2 = {
-	 sql: "SELECT * FROM schoolmapping where type = 'pry'",
-	cartocss: "#schoolmapping{marker-fill: #ae7; marker-width: 12; marker-line-color: black; marker-line-width: 1;}"
-	}
-           cartodb.createLayer(map, url1)
-            .addTo(map) 
-            .done(function (layer) {
-                   }).error(function (){
-                                 })
-           .on('done', function(layer) {
-  layer.getSubLayer(2).set(url2);
+L.tileLayer(
+'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWF5b3R1bmRlIiwiYSI6IlpFM1Jmck0ifQ.13TB14FKWB328q1q7eEZUQ',
+{ attribution:' Map data &copy;' + attr, maxZoom: 18, }).addTo(map);        
+
+var points = 'https://mayotunde.cartodb.com/api/v2/viz/57066938-0a33-11e5-a3a9-0e49835281d6/viz.json';
+
+var vizjson_url = 'https://mayotunde.cartodb.com/api/v2/viz/57066938-0a33-11e5-a3a9-0e49835281d6/viz.json';
+var subLayerOptions = {
+  sql: "SELECT * FROM schoolmapping where type = 'pry'",
+ cartocss: "#schoolmapping{marker-width: 15; marker-line-color: white; marker-line-width: 2;}"
+}
+
+
+cartodb.createLayer(map, vizjson_url)
+.addTo(map)
+.on('done', function(layer) {
+}).on('error', function() {
+})
+cartodb.createLayer(map, points)
+.addTo(map)
+.on('done', function(layer) {
+}).on('error', function() {
+})
+.on('done', function(layer) {
+  layer.getSubLayer(0).set(subLayerOptions);
 }).on('error', function() {
 });
 }
-      window.onload = main;
-    </script>
+window.onload = main;
+
+     </script>
   </body>
 </html>
