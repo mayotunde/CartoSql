@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PostGreSql CartoDb</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset= "UTF-8"/>
+       <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+  </head>
+  <body>
+    <div id="map" style='width: 800px; height: 500px'></div>
+    
+        <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+
+    <script>
+var map;
+function main () {
+      var  map = new L.map('map', {
+          zoomControl: true,
+          center: [6.44, 3.55],
+          zoom: 10
+        });
+var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<a href="http://openstreetmap.org">openstreetmap</a>';
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attr
+        }).addTo(map);
+
+var layer = 'https://mayotunde.cartodb.com/api/v2/viz/3e8a62c4-d04e-11e5-afbf-0e787de82d45/viz.json';
+
+
+var buffer = {
+  sql:("SELECT ST_Buffer(the_geom_webmercator,0.3*1609) AS the_geom_webmercator,cartodb_id FROM spillareaw")
+
+ }
+
+
+
+
+cartodb.createLayer(map, layer)
+.addTo(map)
+.on('done', function(layer) {
+})
+.on('error', function() {
+})
+.on('done', function(layer) {
+  layer.getSubLayer(0).set(buffer);
+}).on('error', function() {
+});
+}
+window.onload = main;
+
+     </script>
+  </body>
+</html>
+
