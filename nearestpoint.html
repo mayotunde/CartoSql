@@ -16,8 +16,8 @@ var map;
 function main () {
       var  map = new L.map('map', {
           zoomControl: true,
-          center: [6.44, 3.55],
-          zoom: 13
+          center: [7.45268460630956, 3.97305718494118],
+          zoom: 10
         });
 var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<a href="http://openstreetmap.org">openstreetmap</a>';
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attr
@@ -25,7 +25,8 @@ var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<
 
 var vizjson_url = 'https://mayotunde.cartodb.com/api/v2/viz/6c558540-a073-11e5-bdb5-0ef24382571b/viz.json';
 var subLayerOptions = {
-  sql:("SELECT * FROM yenitanks ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint(3.3830833,6.45325), 4326) LIMIT 4")
+  sql:("SELECT * FROM schoolmapping ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint(3.94702588203887,
+7.48147608505332), 4326) LIMIT 4")
  }
 
  
