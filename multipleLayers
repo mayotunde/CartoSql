@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Leaflet example | CartoDB.js</title>
+    <title>SQL Query on cartodb layers </title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta charset=UTF-8"/>
        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
   </head>
   <body>
-    <div id="map" style='width: 600px; height: 400px'></div>
+    <div id="map" style='width: 800px; height: 500px'></div>
     
         <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
 
