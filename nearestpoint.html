@@ -23,10 +23,9 @@ var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attr
         }).addTo(map);
 
-var vizjson_url = 'https://mayotunde.cartodb.com/api/v2/viz/6c558540-a073-11e5-bdb5-0ef24382571b/viz.json';
+var vizjson_url = 'https://mayotunde.cartodb.com/api/v2/viz/57066938-0a33-11e5-a3a9-0e49835281d6/viz.json';
 var subLayerOptions = {
-  sql:("SELECT * FROM schoolmapping ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint(3.94702588203887,
-7.48147608505332), 4326) LIMIT 4")
+  sql:("SELECT * FROM schoolmapping ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint(3.94702588203887,7.48147608505332), 4326) LIMIT 4")
  }
 
  
