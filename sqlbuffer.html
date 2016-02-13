@@ -48,6 +48,7 @@ cartodb.createLayer(map, dam2)
   layer.getSubLayer(0).set(buffer);
 }).on('error', function() {
 });
+map.fitBounds(dam, getBounds());
 }
 window.onload = main;
 
