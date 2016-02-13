@@ -27,8 +27,8 @@ var dam = 'https://mayotunde.cartodb.com/api/v2/viz/c5611b6e-d1ff-11e5-999d-0e78
 
 var dam2 = 'https://mayotunde.cartodb.com/api/v2/viz/c5611b6e-d1ff-11e5-999d-0e787de82d45/viz.json';
 var buffer = {
-  sql:("SELECT ST_Buffer(the_geom_webmercator,0.3*1609) AS the_geom_webmercator,cartodb_id FROM dam")
-
+  sql:("SELECT ST_Buffer(the_geom_webmercator,0.3*1609) AS the_geom_webmercator,cartodb_id FROM dam"),
+  cartocss:"#dam{polygon-fill:transparent; line-color:#f45; line-width: 2}"
  }
 
 
