@@ -23,18 +23,22 @@ var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attr
         }).addTo(map);
 
-var layer = 'https://mayotunde.cartodb.com/api/v2/viz/3e8a62c4-d04e-11e5-afbf-0e787de82d45/viz.json';
+var dam = 'https://mayotunde.cartodb.com/api/v2/viz/c5611b6e-d1ff-11e5-999d-0e787de82d45/viz.json';
 
-
+var dam2 = 'https://mayotunde.cartodb.com/api/v2/viz/c5611b6e-d1ff-11e5-999d-0e787de82d45/viz.json';
 var buffer = {
-  sql:("SELECT ST_Buffer(the_geom_webmercator,0.3*1609) AS the_geom_webmercator,cartodb_id FROM spillareaw")
+  sql:("SELECT ST_Buffer(the_geom_webmercator,0.3*1609) AS the_geom_webmercator,cartodb_id FROM dam")
 
  }
 
 
-
-
-cartodb.createLayer(map, layer)
+cartodb.createLayer(map, dam)
+.addTo(map)
+.on('done', function(layer) {
+})
+.on('error', function() {
+})
+cartodb.createLayer(map, dam2)
 .addTo(map)
 .on('done', function(layer) {
 })
