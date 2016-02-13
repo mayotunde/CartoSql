@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PostGreSql CartoDb</title>
+    <title>Finding the nearest points</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta charset= "UTF-8"/>
        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
@@ -22,10 +22,11 @@ function main () {
 var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<a href="http://openstreetmap.org">openstreetmap</a>';
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attr
         }).addTo(map);
-
+var points = 'https://mayotunde.cartodb.com/api/v2/viz/57066938-0a33-11e5-a3a9-0e49835281d6/viz.json';
 var vizjson_url = 'https://mayotunde.cartodb.com/api/v2/viz/57066938-0a33-11e5-a3a9-0e49835281d6/viz.json';
-var subLayerOptions = {
-  sql:("SELECT * FROM schoolmapping ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint(3.94702588203887,7.48147608505332), 4326) LIMIT 4")
+var nearestPoints = {
+  sql:("SELECT * FROM schoolmapping ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint(3.94702588203887,7.48147608505332), 4326) LIMIT 4"),
+  cartocss: "#schoolmapping{marker-fill:transparent;marker-width:15; marker-line-color:#813;marker-line-width:2;}"
  }
 
  
@@ -35,8 +36,13 @@ cartodb.createLayer(map, vizjson_url)
 .on('done', function(layer) {
 }).on('error', function() {
 })
+cartodb.createLayer(map, points)
+.addTo(map)
 .on('done', function(layer) {
-  layer.getSubLayer(0).set(subLayerOptions);
+}).on('error', function() {
+})
+.on('done', function(layer) {
+  layer.getSubLayer(0).set(nearestPoints);
 }).on('error', function() {
 });
 }
