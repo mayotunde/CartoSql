@@ -1,58 +1,46 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PostGreSql CartoDb</title>
+    <title>Visualizing Buffer Analysis</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta charset= "UTF-8"/>
        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+	<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
   </head>
   <body>
     <div id="map" style='width: 800px; height: 500px'></div>
-    
-        <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-
-    <script>
+     <script>
 var map;
 function main () {
-      var  map = new L.map('map', {
-          zoomControl: true,
-          center: [7.50, 4.00],
-          zoom: 12
-        });
+      var  map = new L.map('map', {center: [7.429, 3.8600],zoom: 13});
 var attr = '<a href="http://mapsnigeriainitiative.wordpress.com">MapsNI</a>,'+'<a href="http://openstreetmap.org">openstreetmap</a>';
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: attr
         }).addTo(map);
-
+//Load the polygon layer into leaflet
 var dam = 'https://mayotunde.cartodb.com/api/v2/viz/c5611b6e-d1ff-11e5-999d-0e787de82d45/viz.json';
 
+//Do the same again and term it dam2
+
 var dam2 = 'https://mayotunde.cartodb.com/api/v2/viz/c5611b6e-d1ff-11e5-999d-0e787de82d45/viz.json';
+
+//Execute a buffer operation to the feature loaded in
 var buffer = {
   sql:("SELECT ST_Buffer(the_geom_webmercator,0.3*1609) AS the_geom_webmercator,cartodb_id FROM dam"),
   cartocss:"#dam{polygon-fill:transparent; line-color:#f45; line-width: 2}"
  }
 
+//Draw the var objects above as layers on the leaflet map
 
-cartodb.createLayer(map, dam)
-.addTo(map)
-.on('done', function(layer) {
-})
-.on('error', function() {
-})
-cartodb.createLayer(map, dam2)
-.addTo(map)
-.on('done', function(layer) {
-})
-.on('error', function() {
-})
+cartodb.createLayer(map, dam).addTo(map)
+.on('done', function(layer) {}).on('error', function() { })
+cartodb.createLayer(map, dam2).addTo(map)
+.on('done', function(layer) {}).on('error', function() {})
+
 .on('done', function(layer) {
   layer.getSubLayer(0).set(buffer);
-}).on('error', function() {
-});
-map.fitBounds(dam, getBounds());
+}).on('error', function() { });
 }
 window.onload = main;
-
      </script>
   </body>
 </html>
-
