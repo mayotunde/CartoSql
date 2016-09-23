@@ -1,0 +1,70 @@
+<html>
+<head>
+<title></title>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.11/themes/css/cartodb.css" />
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/3.11/cartodb.js"></script>
+  <style>
+        #menu { position: absolute; top: 5px; right: 680px; width: 150px; height:150px; z-index:10;}
+    #menu a {float: right; margin: 10px 20px; width: 70px;padding: 20px;background: #4d4d4d;
+      text-align: left;font: 11px Arial Bold; color: #fff;text-decoration: none;
+       }
+    #menu a.selected,
+    #menu a:hover {color: #e9b50b; }
+  </style>
+</head>
+<body>
+  <div id='map' style='width:700px;height: 500px'></div>
+  <div id='menu'>
+    <a href="#Cities" id="pry" class="button pry">Primary<br>Pry Only</a>
+<a href="#metropolis" id="sec" class="button sec">Secondary<br>Sec Only</a> 
+<a href="#megapolis" id="mxd" class="button mixed">Mixed<br>Pry&Sec</a> 
+  </div>
+
+  <script>
+  var map;
+  function main(){map = new L.Map('map', { 
+      center: [7.6, 3.85], zoom: 8})
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: ' <a href="http://mapsnigeriainitiative.com">mapsnigeriainitiative</a>'
+    }).addTo(map);
+var Url = 'https://mapsnigeriainitiative.carto.com/api/v2/viz/047f8dcc-80dc-11e6-bc80-0e3ebc282e83/viz.json';
+
+  var sublayers = [];
+
+  cartodb.createLayer(map, Url).addTo(map)
+  .on('done', function(layer) {
+   
+var Options = {
+      sql: "SELECT * FROM schoocategory",
+      cartocss: "#africa_populated_cities_2{marker-fill: #FED976; marker-width: 12; marker-line-color: black; marker-allow-overlap: true;}"
+    }
+
+    var sublayer = layer.getSubLayer(0);
+
+    sublayer.set(Options);
+
+    sublayers.push(sublayer);
+  }).on('error', function() {
+     });
+
+    var Actions = {
+    pry: function(){sublayers[0].setSQL("SELECT * FROM schoocategory where Type = 'pry'");
+      return true;
+    },
+    mxd: function() { sublayers[0].setSQL("SELECT * FROM schoocategory where Type = 'mxd'");
+      return true;
+    },
+    sec: function() {sublayers[0].setSQL("SELECT * FROM schoocategory where Type = 'sec'");
+              return true;
+    }
+  }
+
+  $('.button').click(function() {
+    $('.button').removeClass('selected');
+    $(this).addClass('selected');
+        Actions[$(this).attr('id')]();
+  });
+
+} window.onload = main;
+  </script></body></html>
+
